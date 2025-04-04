@@ -1,6 +1,6 @@
 # JanusBind
 
-<img src="https://github.com/user-attachments/assets/6fb24350-0523-42df-965a-d22a2646ae8a" alt="ImageGen Apr 4, 2025" width="400"/>
+<img src="https://github.com/user-attachments/assets/6fb24350-0523-42df-965a-d22a2646ae8a" alt="ImageGen Apr 4, 2025" width="300"/>
 
 
 # Installation:
