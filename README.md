@@ -1,10 +1,8 @@
 # JanusBind
 
-<img src="https://github.com/user-attachments/assets/c543847a-d69e-4678-9293-686157861d78" width="300"/>
-<img src="https://github.com/user-attachments/assets/858ae28e-6da4-49db-9c07-d558d4ae66b6" width="300"/>
-
-
-<img src="https://github.com/user-attachments/assets/baea2c9d-10c8-4e8d-8962-107d1ac2f863" width="300"/>
+<img src="https://github.com/user-attachments/assets/c543847a-d69e-4678-9293-686157861d78" width="200"/>
+<img src="https://github.com/user-attachments/assets/858ae28e-6da4-49db-9c07-d558d4ae66b6" width="200"/>
+<img src="https://github.com/user-attachments/assets/baea2c9d-10c8-4e8d-8962-107d1ac2f863" width="200"/>
 
 
 # Installation:
