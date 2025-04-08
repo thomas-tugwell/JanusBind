@@ -1,0 +1,33 @@
+<ROSETTASCRIPTS>
+    <SCOREFXNS>
+        <ScoreFunction name="ref2015_cart" weights="ref2015_cart.wts"/>
+    </SCOREFXNS>
+    <TASKOPERATIONS>
+    </TASKOPERATIONS>
+    <FILTERS>
+    </FILTERS>
+    <RESIDUE_SELECTORS>
+        <Chain name="chainA" chains="A,C,E,G,I"/>
+        <Chain name="chainB" chains="B,D,F,H,J"/>
+    </RESIDUE_SELECTORS>
+    <MOVERS>
+      <SetupForSymmetry name="setup_symm" definition="C5.symm" />
+      <FastRelax name="sym_fast_relax" disable_design="true" scorefxn="ref2015_cart" cartesian="true" repeats="5" min_type="dfpmin_armijo_nonmonotone">
+            <MoveMap name="MM">
+                <Chain number="1,3,5,7,9" chi="true" bb="false">
+                <Chain number="2,4,6,8,10" chi="true" bb="false">
+        </FastRelax>
+      <InterfaceAnalyzerMover name="interface_analyzer" interface="A_B" pack_separated="1" pack_input="1"/>
+    </MOVERS>
+    <APPLY_TO_POSE>
+    </APPLY_TO_POSE>
+    <PROTOCOLS>
+      <Add mover_name="setup_symm" />
+      <Add mover_name="sym_fast_relax" />
+      <Add mover_name="backrub_flex" />
+      <Add mover_name="sym_min"/>
+      <Add mover_name="backrub_flex" />
+      <Add mover_name="sym_min"/>
+      <Add mover_name="interface_analyzer"/>
+    </PROTOCOLS>
+</ROSETTASCRIPTS>

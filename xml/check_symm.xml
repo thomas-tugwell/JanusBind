@@ -1,0 +1,17 @@
+<ROSETTASCRIPTS>
+    <SCOREFXNS>
+        <ScoreFunction name="ref2015_cart" weights="ref2015_cart.wts"/>
+    </SCOREFXNS>
+    <TASKOPERATIONS>
+    </TASKOPERATIONS>
+    <FILTERS>
+    </FILTERS>
+    <MOVERS>
+      <SetupForSymmetry name="setup_symm" definition="./inputs/symmdefs/C5.symm" />
+    </MOVERS>
+    <APPLY_TO_POSE>
+    </APPLY_TO_POSE>
+    <PROTOCOLS>
+      <Add mover_name="setup_symm" />
+    </PROTOCOLS>
+</ROSETTASCRIPTS>

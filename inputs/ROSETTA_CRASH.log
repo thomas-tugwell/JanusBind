@@ -1,0 +1,53 @@
+##############################################################################################################
+#
+# Rosetta crash log. Please submit the contents of this file to http://crash.rosettacommons.org/
+# or use the script Rosetta/main/source/scripts/python/public/report_crashes.py
+#
+
+[START_CRASH_REPORT]
+[ROSETTA_VERSION]: 2024.18+main.117e2f6
+[COMMIT_DATE]: 2024-04-29T11:38:30
+[APPLICATION]: rosetta_scripts.mpi.linuxgccrelease
+[MODE]: Release
+[EXTRAS]: mpi (OpenMPI 4.0.5) 
+[OS]: GNU/Linux
+[COMPILER]: GCC version "4.8.5 20150623 (Red Hat 4.8.5-44)"
+[STDLIB]: libstdc++ version 20150623
+[START_OPTIONS]
+ -in:file:s=pdbs/C5_3_9_dn10_AB_trunc_input.pdb -out:nstruct=1 -out:pdb -out:path:all=../outputs/test_symm/ -parser:protocol=../xml/check_symm.xml
+
+[END_OPTIONS]
+
+[START_BACKTRACE]: RAW_LIBC
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libutility.so(backtrace_string(int)+0x3a) [0x7f1374753e7a]
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libutility.so(utility::excn::Exception::Exception(char const*, int, std::string const&)+0x51) [0x7f1374792861]
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libutility.so(utility::exit(char const*, int, std::string const&, int)+0xa5) [0x7f1374758f95]
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libcore.2.so(core::conformation::symmetry::SymmData::read_symmetry_data_from_file(std::string)+0x24e) [0x7f1376092f9e]
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libprotocols.4.so(protocols::symmetry::SetupForSymmetryMover::process_symmdef_file(std::string)+0xa7) [0x7f137d58f5f7]
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libprotocols.4.so(protocols::symmetry::SetupForSymmetryMover::parse_my_tag(std::shared_ptr<utility::tag::Tag const>, basic::datacache::DataMap&)+0x1dc) [0x7f137d5910cc]
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libprotocols.1.so(protocols::moves::MoverFactory::newMover(std::shared_ptr<utility::tag::Tag const>, basic::datacache::DataMap&) const+0x6d) [0x7f137aa8801d]
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libprotocols.1.so(protocols::rosetta_scripts::RosettaScriptsParser::instantiate_mover(std::shared_ptr<utility::tag::Tag const> const&, basic::datacache::DataMap&) const+0x169) [0x7f137ab6e819]
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libprotocols.1.so(protocols::rosetta_scripts::RosettaScriptsParser::generate_mover_for_protocol(std::shared_ptr<utility::tag::Tag const>, basic::datacache::DataMap&, utility::options::OptionCollection const&, std::shared_ptr<protocols::rosetta_scripts::XmlObjects>, std::shared_ptr<basic::resource_manager::ResourceManager>)+0x5a8) [0x7f137ab724f8]
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libprotocols.1.so(protocols::rosetta_scripts::RosettaScriptsParser::generate_mover_for_protocol(std::shared_ptr<utility::tag::Tag const>, utility::options::OptionCollection const&, basic::datacache::DataMap&, std::string const&, std::string const&, std::shared_ptr<protocols::rosetta_scripts::XmlObjects>, std::shared_ptr<basic::resource_manager::ResourceManager>)+0x270) [0x7f137ab767f0]
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libprotocols.1.so(protocols::rosetta_scripts::RosettaScriptsParser::generate_mover_for_protocol(std::shared_ptr<utility::tag::Tag const>, utility::options::OptionCollection const&, std::string const&, std::string const&, std::shared_ptr<protocols::rosetta_scripts::XmlObjects>, std::shared_ptr<basic::resource_manager::ResourceManager>)+0x10a) [0x7f137ab76b8a]
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libprotocols.1.so(protocols::rosetta_scripts::RosettaScriptsParser::generate_mover(std::shared_ptr<protocols::moves::Mover>&, bool, std::string const&, std::string const&, std::string const&, bool)+0x11e) [0x7f137ab7782e]
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libprotocols.1.so(protocols::jd2::JobDistributor::run_one_job(std::shared_ptr<protocols::moves::Mover>&, long, std::string&, std::string&, unsigned long&, unsigned long&, bool)+0x141e) [0x7f137a77ad4e]
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libprotocols.1.so(protocols::jd2::JobDistributor::go_main(std::shared_ptr<protocols::moves::Mover>)+0xc1) [0x7f137a77c331]
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libprotocols.1.so(protocols::jd2::FileSystemJobDistributor::go(std::shared_ptr<protocols::moves::Mover>)+0x4a) [0x7f137a76b65a]
+rosetta_scripts.mpi.linuxgccrelease() [0x403d1e]
+/lib64/libc.so.6(__libc_start_main+0xf5) [0x7f1371ab3555]
+rosetta_scripts.mpi.linuxgccrelease() [0x4040c1]
+
+[END_BACKTRACE]
+
+[FILE]: src/core/conformation/symmetry/SymmData.cc
+[LINE]: 393
+[START_MESSAGE]
+[ ERROR ] UtilityExitException
+ERROR: [ERROR] Error opening symmetry file 'C5.symm'
+
+
+
+[END_MESSAGE]
+[END_CRASH_REPORT]
+
