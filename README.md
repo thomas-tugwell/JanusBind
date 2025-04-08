@@ -1,13 +1,6 @@
 # JanusBind
 <img width="863" alt="image" src="https://github.com/user-attachments/assets/c7fb8694-2640-45ba-a66a-628478e85f25" />
 
-
-<img src="https://github.com/user-attachments/assets/858ae28e-6da4-49db-9c07-d558d4ae66b6" width="250"/>
-<img src="https://github.com/user-attachments/assets/c543847a-d69e-4678-9293-686157861d78" width="250"/>
-<img src="https://github.com/user-attachments/assets/baea2c9d-10c8-4e8d-8962-107d1ac2f863" width="250"/>
-
-
-
 # Installation:
 
 JanusBind was built with Python 3.11 and requires PyRosetta, therefore it is recommended you compile [this](https://graylab.jhu.edu/download/PyRosetta4/archive/release/PyRosetta4.Debug.python311.linux/PyRosetta4.Debug.python311.linux.release-387.tar.bz2) version of PyRosetta from source. Testing was not performed on any other versions.
