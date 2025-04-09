@@ -1,85 +1,97 @@
 import os
-import subprocess
 import argparse
+import subprocess
+import shutil
+from Bio.PDB import PDBParser, PDBIO, Select
 
+def run_ligandmpnn(input_pdb, output_dir, seed, cycle):
+    mpnn_output_dir = os.path.join(output_dir, f"mpnn/mpnn_results_{cycle}")
+    os.makedirs(mpnn_output_dir, exist_ok=True)
 
-def make_directory(path):
-    os.makedirs(path, exist_ok=True)
-
-
-def run_ligandmpnn(input_pdb, output_dir, cycle, chains_to_design, seed=111, temperature=2.0):
-    mpnn_dir = os.path.join(output_dir, f"mpnn/mpnn_cycle_{cycle}")
-    make_directory(mpnn_dir)
-
-    command = (
+    cmd = (
         f"python run.py --model_type 'soluble_mpnn' --seed {seed} "
-        f"--pdb_path {input_pdb} --out_folder {mpnn_dir} "
+        f"--pdb_path {input_pdb} --out_folder {mpnn_output_dir} "
         f"--number_of_batches 1 --batch_size 1 --pack_side_chains 1 "
-        f"--number_of_packs_per_design 1 --homo_oligomer 1 --chains_to_design {chains_to_design} "
-        f"--temperature {temperature}"
+        f"--number_of_packs_per_design 1 --homo_oligomer 1 "
+        f"--chains_to_design 'A,C,E,G,I' --temperature 2.0"
     )
-    print(f"Running LigandMPNN cycle {cycle}...")
-    subprocess.run(command, shell=True, check=True)
+    print(f"Running LigandMPNN: {cmd}")
+    subprocess.run(cmd, shell=True, check=True)
 
-    # Find the output packed PDB (assuming consistent naming convention)
-    for root, _, files in os.walk(os.path.join(mpnn_dir, "packed")):
-        for file in files:
-            if file.endswith(".pdb"):
-                return os.path.join(root, file)
-    raise FileNotFoundError("No packed PDB file found after LigandMPNN.")
+    return os.path.join(mpnn_output_dir, "packed"), mpnn_output_dir
 
-
-def run_rosetta_fastrelax(input_pdb, output_dir, cycle, xml_script="symm_design.xml"):
+def run_fastrelax(input_pdb, symmdef, output_dir, cycle):
     relax_dir = os.path.join(output_dir, f"relax/relax_cycle_{cycle}")
-    make_directory(relax_dir)
+    os.makedirs(relax_dir, exist_ok=True)
 
-    command = (
-        f"rosetta_scripts.mpi.linuxgccrelease -parser:protocol {xml_script} "
-        f"-s {input_pdb} -out:pdb -out:path:all {relax_dir} -ex1 -ex2aro -nstruct 1"
+    cmd = (
+        f"rosetta_scripts.mpi.linuxgccrelease -parser:protocol symm_design.xml "
+        f"-s {input_pdb} -symmetry:symmetry_definition {symmdef} -out:pdb "
+        f"-out:path:all {relax_dir} -ex1 -ex2aro -nstruct 1"
     )
-    print(f"Running Rosetta FastRelax cycle {cycle}...")
-    subprocess.run(command, shell=True, check=True)
+    print(f"Running FastRelax: {cmd}")
+    subprocess.run(cmd, shell=True, check=True)
 
-    for file in os.listdir(relax_dir):
-        if file.endswith(".pdb"):
-            return os.path.join(relax_dir, file)
-    raise FileNotFoundError("No PDB output from Rosetta FastRelax.")
+    return relax_dir
 
+class ChainSelect(Select):
+    def __init__(self, chains_to_keep):
+        self.chains_to_keep = chains_to_keep
+
+    def accept_chain(self, chain):
+        return chain.id in self.chains_to_keep
+
+def prune_pdb_to_chains(input_pdb_path, output_pdb_path, chains_to_keep=["A", "B"]):
+    parser = PDBParser(QUIET=True)
+    structure = parser.get_structure("structure", input_pdb_path)
+
+    io = PDBIO()
+    io.set_structure(structure)
+    io.save(output_pdb_path, ChainSelect(chains_to_keep))
+    return output_pdb_path
 
 def main():
-    parser = argparse.ArgumentParser(description="Iterative LigandMPNN + Rosetta FastRelax driver")
-    parser.add_argument("--input_pdb", type=str, required=True, help="Initial input PDB file")
-    parser.add_argument("--output_base", type=str, default="./outputs", help="Base output directory")
-    parser.add_argument("--job_name", type=str, required=True, help="Name for the output job")
-    parser.add_argument("--chains_to_design", type=str, default="A,C,E,G,I", help="Comma-separated list of chains to design")
-    parser.add_argument("--num_cycles", type=int, default=3, help="Number of MPNN + Relax cycles")
-    parser.add_argument("--temperature", type=float, default=2.0, help="Sampling temperature for MPNN")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--input_pdb", required=True, help="Initial input PDB file")
+    parser.add_argument("--symmdef", required=True, help="Path to symmetry definition file")
+    parser.add_argument("--output_base", default="./outputs", help="Base directory for outputs")
+    parser.add_argument("--job_name", required=True, help="Name of the design job")
     parser.add_argument("--seed", type=int, default=111, help="Random seed")
+    parser.add_argument("--num_cycles", type=int, default=3, help="Number of design cycles")
     args = parser.parse_args()
 
     job_dir = os.path.join(args.output_base, args.job_name)
+    os.makedirs(job_dir, exist_ok=True)
+
     input_pdb = args.input_pdb
 
     for cycle in range(1, args.num_cycles + 1):
-        mpnn_output = run_ligandmpnn(
-            input_pdb=input_pdb,
-            output_dir=job_dir,
-            cycle=cycle,
-            chains_to_design=args.chains_to_design,
-            seed=args.seed,
-            temperature=args.temperature,
-        )
+        print(f"\n=== Starting Cycle {cycle} ===")
 
-        relaxed_output = run_rosetta_fastrelax(
-            input_pdb=mpnn_output,
-            output_dir=job_dir,
-            cycle=cycle,
-        )
+        # Run LigandMPNN
+        packed_dir, mpnn_out = run_ligandmpnn(input_pdb, job_dir, args.seed, cycle)
 
-        input_pdb = relaxed_output  # feed into next cycle
+        # Get the output pdb from MPNN (assumes one pdb output)
+        mpnn_pdbs = [f for f in os.listdir(packed_dir) if f.endswith(".pdb")]
+        if not mpnn_pdbs:
+            raise FileNotFoundError("No PDB file found in LigandMPNN packed output.")
 
-    print("All cycles completed.")
+        mpnn_pdb_path = os.path.join(packed_dir, mpnn_pdbs[0])
+        pruned_pdb_path = os.path.join(job_dir, f"pruned_cycle_{cycle}.pdb")
 
+        # Prune to chains A and B for FastRelax
+        prune_pdb_to_chains(mpnn_pdb_path, pruned_pdb_path, ["A", "B"])
+
+        # Run FastRelax
+        relax_dir = run_fastrelax(pruned_pdb_path, args.symmdef, job_dir, cycle)
+
+        # Use the output of FastRelax as the next input
+        relaxed_pdbs = [f for f in os.listdir(relax_dir) if f.endswith(".pdb")]
+        if not relaxed_pdbs:
+            raise FileNotFoundError("No PDB file found in FastRelax output.")
+
+        input_pdb = os.path.join(relax_dir, relaxed_pdbs[0])
 
 if __name__ == "__main__":
     main()
+
