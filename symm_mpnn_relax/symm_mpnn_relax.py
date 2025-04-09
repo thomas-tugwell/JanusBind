@@ -9,11 +9,14 @@ def run_ligandmpnn(input_pdb, output_dir, seed, cycle):
     os.makedirs(mpnn_output_dir, exist_ok=True)
 
     cmd = (
-        f"python run.py --model_type 'soluble_mpnn' --seed {seed} "
+        f"python ../LigandMPNN/run.py --model_type 'soluble_mpnn' --seed {seed} "
         f"--pdb_path {input_pdb} --out_folder {mpnn_output_dir} "
         f"--number_of_batches 1 --batch_size 1 --pack_side_chains 1 "
         f"--number_of_packs_per_design 1 --homo_oligomer 1 "
-        f"--chains_to_design 'A,C,E,G,I' --temperature 2.0"
+        f"--chains_to_design 'A,C,E,G,I' --temperature 2.0 "
+        f"--checkpoint_soluble_mpnn ../LigandMPNN/model_params/solublempnn_v_48_020.pt "
+        f"--checkpoint_path_sc ../LigandMPNN/model_params/ligandmpnn_sc_v_32_002_16.pt"
+
     )
     print(f"Running LigandMPNN: {cmd}")
     subprocess.run(cmd, shell=True, check=True)
@@ -25,7 +28,7 @@ def run_fastrelax(input_pdb, symmdef, output_dir, cycle):
     os.makedirs(relax_dir, exist_ok=True)
 
     cmd = (
-        f"rosetta_scripts.mpi.linuxgccrelease -parser:protocol symm_design.xml "
+        f"rosetta_scripts.mpi.linuxgccrelease -parser:protocol ../xml/symm_relax_test.xml "
         f"-s {input_pdb} -symmetry:symmetry_definition {symmdef} -out:pdb "
         f"-out:path:all {relax_dir} -ex1 -ex2aro -nstruct 1"
     )

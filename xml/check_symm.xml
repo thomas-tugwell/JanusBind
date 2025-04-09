@@ -7,7 +7,7 @@
     <FILTERS>
     </FILTERS>
     <MOVERS>
-      <SetupForSymmetry name="setup_symm" definition="./inputs/symmdefs/C5.symm" />
+      <SetupForSymmetry name="setup_symm" definition="C5.symm" />
     </MOVERS>
     <APPLY_TO_POSE>
     </APPLY_TO_POSE>

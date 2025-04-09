@@ -12,10 +12,31 @@
     </RESIDUE_SELECTORS>
     <MOVERS>
       <SetupForSymmetry name="setup_symm" definition="C5.symm" />
-      <FastRelax name="sym_fast_relax" disable_design="true" scorefxn="ref2015_cart" cartesian="true" repeats="5" min_type="dfpmin_armijo_nonmonotone">
+      <FastRelax name="sym_fast_relax" disable_design="true" scorefxn="ref2015_cart" cartesian="true" repeats="1" min_type="dfpmin_armijo_nonmonotone">
             <MoveMap name="MM">
-                <Chain number="1,3,5,7,9" chi="true" bb="false">
-                <Chain number="2,4,6,8,10" chi="true" bb="false">
+    		<Chain number="1" chi="true" bb="true"/>
+    		<Chain number="3" chi="true" bb="true"/>
+    		<Chain number="5" chi="true" bb="true"/>
+    		<Chain number="7" chi="true" bb="true"/>
+    		<Chain number="9" chi="true" bb="true"/>
+
+    		<Chain number="2" chi="true" bb="false"/>
+    		<Chain number="4" chi="true" bb="false"/>
+		<Chain number="6" chi="true" bb="false"/>
+                <Chain number="8" chi="true" bb="false"/>
+		<Chain number="10" chi="true" bb="false"/>
+
+                <Jump number="1" setting="true"/>
+                <Jump number="2" setting="true"/>
+                <Jump number="3" setting="true"/>
+                <Jump number="4" setting="true"/>
+                <Jump number="5" setting="true"/>
+                <Jump number="6" setting="true"/>
+                <Jump number="7" setting="true"/>
+                <Jump number="8" setting="true"/>
+                <Jump number="9" setting="true"/>
+                <Jump number="10" setting="true"/>
+            </MoveMap>
         </FastRelax>
       <InterfaceAnalyzerMover name="interface_analyzer" interface="A_B" pack_separated="1" pack_input="1"/>
     </MOVERS>
@@ -24,10 +45,6 @@
     <PROTOCOLS>
       <Add mover_name="setup_symm" />
       <Add mover_name="sym_fast_relax" />
-      <Add mover_name="backrub_flex" />
-      <Add mover_name="sym_min"/>
-      <Add mover_name="backrub_flex" />
-      <Add mover_name="sym_min"/>
       <Add mover_name="interface_analyzer"/>
     </PROTOCOLS>
 </ROSETTASCRIPTS>
