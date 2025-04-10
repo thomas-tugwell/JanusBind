@@ -1,0 +1,96 @@
+##############################################################################################################
+#
+# Rosetta crash log. Please submit the contents of this file to http://crash.rosettacommons.org/
+# or use the script Rosetta/main/source/scripts/python/public/report_crashes.py
+#
+
+[START_CRASH_REPORT]
+[ROSETTA_VERSION]: 2024.18+main.117e2f6
+[COMMIT_DATE]: 2024-04-29T11:38:30
+[APPLICATION]: UNKNOWN APPLICATION
+[MODE]: Release
+[EXTRAS]: mpi (OpenMPI 4.0.5) 
+[OS]: GNU/Linux
+[COMPILER]: GCC version "4.8.5 20150623 (Red Hat 4.8.5-44)"
+[STDLIB]: libstdc++ version 20150623
+[START_OPTIONS]
+NO OPTIONS SPECIFIED
+
+[END_OPTIONS]
+
+[START_BACKTRACE]: RAW_LIBC
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libutility.so(backtrace_string(int)+0x3a) [0x7fd92294ce7a]
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libutility.so(utility::excn::Exception::Exception(char const*, int, std::string const&)+0x51) [0x7fd92298b861]
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libutility.so(utility::options::OptionCollection::find_key_cl(std::string const&, std::string const&, bool)+0xc73) [0x7fd922a77d43]
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libutility.so(utility::options::OptionCollection::load_option_cl(std::string const&, std::list<std::string, std::allocator<std::string> >&, std::string const&)+0x15d) [0x7fd922a789dd]
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libutility.so(utility::options::OptionCollection::load(std::string, std::list<std::string, std::allocator<std::string> >&, bool)+0x167) [0x7fd922a7bf27]
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libutility.so(utility::options::OptionCollection::load(int, char* const*, bool)+0x13e) [0x7fd922a7cb2e]
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libcore.6.so(core::init::init_options(int, char**)+0x1f) [0x7fd92826f7ef]
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libcore.6.so(core::init::init(int, char**)+0x27) [0x7fd928273867]
+rosetta_scripts.mpi.linuxgccrelease() [0x403a2a]
+/lib64/libc.so.6(__libc_start_main+0xf5) [0x7fd91fcac555]
+rosetta_scripts.mpi.linuxgccrelease() [0x4040c1]
+
+[END_BACKTRACE]
+
+[FILE]: src/utility/options/OptionCollection.cc
+[LINE]: 1467
+[START_MESSAGE]
+Option matching -parse:protocol not found in command line top-level context
+Did you mean:
+	 -docking:ligand:protocol
+	 -parser:protocol
+	 -run:protocol
+
+
+[END_MESSAGE]
+[END_CRASH_REPORT]
+
+##############################################################################################################
+#
+# Rosetta crash log. Please submit the contents of this file to http://crash.rosettacommons.org/
+# or use the script Rosetta/main/source/scripts/python/public/report_crashes.py
+#
+
+[START_CRASH_REPORT]
+[ROSETTA_VERSION]: 2024.18+main.117e2f6
+[COMMIT_DATE]: 2024-04-29T11:38:30
+[APPLICATION]: rosetta_scripts.mpi.linuxgccrelease
+[MODE]: Release
+[EXTRAS]: mpi (OpenMPI 4.0.5) 
+[OS]: GNU/Linux
+[COMPILER]: GCC version "4.8.5 20150623 (Red Hat 4.8.5-44)"
+[STDLIB]: libstdc++ version 20150623
+[START_OPTIONS]
+ -in:file:s=testing_cycles/cycles_job/pruned_cycle_1.pdb -out:nstruct=1 -out:pdb -out:path:all=testing_cycles/cycles_job/relax/relax_cycle_1/ -parser:protocol=symm_design.xml -packing:ex1 -packing:ex2aro -symmetry:symmetry_definition=./C5.symm
+
+[END_OPTIONS]
+
+[START_BACKTRACE]: RAW_LIBC
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libutility.so(backtrace_string(int)+0x3a) [0x7f660b27ce7a]
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libutility.so(utility::excn::Exception::Exception(char const*, int, std::string const&)+0x51) [0x7f660b2bb861]
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libutility.so(utility::exit(char const*, int, std::string const&, int)+0xa5) [0x7f660b281f95]
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libprotocols.1.so(protocols::rosetta_scripts::RosettaScriptsParser::read_in_and_recursively_replace_includes(std::string const&, std::string&, utility::vector1<std::string, std::allocator<std::string> >, unsigned long, bool, std::string const&) const+0xe64) [0x7f661169d204]
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libprotocols.1.so(protocols::rosetta_scripts::RosettaScriptsParser::create_tag_from_xml(std::string const&, utility::vector1<std::string, std::allocator<std::string> > const&)+0xe9) [0x7f661169e5c9]
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libprotocols.1.so(protocols::rosetta_scripts::RosettaScriptsParser::create_tag_from_xml(std::string const&, utility::options::OptionCollection const&)+0x17e) [0x7f661169ebae]
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libprotocols.1.so(protocols::rosetta_scripts::RosettaScriptsParser::generate_mover(std::shared_ptr<protocols::moves::Mover>&, bool, std::string const&, std::string const&, std::string const&, bool)+0xac) [0x7f66116a07bc]
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libprotocols.1.so(protocols::jd2::JobDistributor::run_one_job(std::shared_ptr<protocols::moves::Mover>&, long, std::string&, std::string&, unsigned long&, unsigned long&, bool)+0x141e) [0x7f66112a3d4e]
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libprotocols.1.so(protocols::jd2::JobDistributor::go_main(std::shared_ptr<protocols::moves::Mover>)+0xc1) [0x7f66112a5331]
+/ihome/crc/install/rosetta/rosetta_v2024.18.62107/source/build/src/release/linux/3.10/64/x86/gcc/10.2/mpi/libprotocols.1.so(protocols::jd2::FileSystemJobDistributor::go(std::shared_ptr<protocols::moves::Mover>)+0x4a) [0x7f661129465a]
+rosetta_scripts.mpi.linuxgccrelease() [0x403d1e]
+/lib64/libc.so.6(__libc_start_main+0xf5) [0x7f66085dc555]
+rosetta_scripts.mpi.linuxgccrelease() [0x4040c1]
+
+[END_BACKTRACE]
+
+[FILE]: src/protocols/rosetta_scripts/RosettaScriptsParser.cc
+[LINE]: 618
+[START_MESSAGE]
+[ ERROR ] UtilityExitException
+ERROR: Unable to open RosettaScripts XML file: "symm_design.xml".
+
+
+
+[END_MESSAGE]
+[END_CRASH_REPORT]
+
